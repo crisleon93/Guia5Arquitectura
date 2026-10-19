@@ -11,7 +11,7 @@
     <header>
       <p class="eyebrow">SENA · ADSO</p>
       <h1>Gestor de tareas</h1>
-      <p class="muted">Proyecto base para practicar separación de responsabilidades.</p>
+      <p class="muted">Proyecto refactorizado — separación de responsabilidades por capas.</p>
       <span id="api-status" class="status">Conectando con API…</span>
     </header>
 
@@ -36,6 +36,15 @@
     </section>
     <footer>Base didáctica: los datos se guardan en memoria y se reinician al detener el backend.</footer>
   </main>
+
+  <!--
+    Orden de carga:
+    1. taskApi.js  → capa de comunicación con el backend
+    2. taskUI.js   → capa de renderizado del DOM
+    3. app.js      → orquestador: conecta API y UI con los eventos
+  -->
+  <script src="src/api/taskApi.js"></script>
+  <script src="src/ui/taskUI.js"></script>
   <script src="src/app.js"></script>
 </body>
 </html>

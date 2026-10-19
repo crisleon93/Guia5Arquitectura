@@ -1,25 +1,14 @@
-const express = require("express");
-const cors = require("cors");
-const { TaskRepository } = require("./taskRepository");
-const { TaskService } = require("./taskService");
-const { createTaskController } = require("./taskController");
-const { createTaskRoutes } = require("./taskRoutes");
+/**
+ * Punto de entrada del servidor (server.js)
+ *
+ * Responsabilidad única: leer la configuración de entorno y
+ * arrancar el servidor HTTP. No contiene lógica de aplicación.
+ */
+const { buildApp } = require("./app");
 
-const app = express();
 const port = process.env.PORT || 3000;
+const app  = buildApp();
 
-app.use(cors());
-app.use(express.json());
-
-const repository = new TaskRepository();
-const service = new TaskService(repository);
-const controller = createTaskController(service);
-
-app.get("/api/health", (req, res) => res.json({ status: "ok" }));
-app.use("/api/tasks", createTaskRoutes(controller));
-
-app.use((error, req, res, next) => {
-  res.status(error.statusCode || 500).json({ error: error.message || "Error interno del servidor" });
+app.listen(port, () => {
+  console.log(`API lista en http://localhost:${port}`);
 });
-
-app.listen(port, () => console.log(`API lista en http://localhost:${port}`));
